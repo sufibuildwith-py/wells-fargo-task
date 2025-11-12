@@ -1,20 +1,25 @@
 package com.wellsfargo.counselor.entity;
 
-
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Advisor {
+public class Client {
 
     @Id
-    @GeneratedValue()
-    private long advisorId;
+    @GeneratedValue
+    private long clientId;
+
+    @ManyToOne
+    @JoinColumn
+    private Advisor adviserId;
+
 
     @OneToMany
-    private List<Client> clientList = new ArrayList<>();
+    private List<Portfolio> portfolioList = new ArrayList<>();
+
 
     @Column(nullable = false)
     private String firstName;
@@ -32,22 +37,37 @@ public class Advisor {
     private String email;
 
 
-    protected Advisor() {
 
+
+
+
+
+
+    protected Client() {
     }
 
-    public Advisor(long advisorId, String firstName, String lastName, String address, String phone, String email, List<Client> clientlist) {
-        this.advisorId = advisorId;
+    public Client(long clientId, Advisor adviserId, String firstName, String lastName, String address, String phone, String email, List<Portfolio> portfolioList) {
+        this.clientId = clientId;
+        this.adviserId = adviserId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phone = phone;
         this.email = email;
-        this.clientList = clientlist;
+        this.portfolioList = portfolioList;
     }
 
-    public Long getAdvisorId() {
-        return advisorId;
+
+    public long getClientId() {
+        return clientId;
+    }
+
+    public Advisor getAdviserId() {
+        return adviserId;
+    }
+
+    public void setAdviserId(Advisor adviserId) {
+        this.adviserId = adviserId;
     }
 
     public String getFirstName() {
@@ -90,12 +110,11 @@ public class Advisor {
         this.email = email;
     }
 
-
-    public List<Client> getClientList() {
-        return clientList;
+    public List<Portfolio> getPortfolioList() {
+        return portfolioList;
     }
 
-    public void setClientList(List<Client> clientList) {
-        this.clientList = clientList;
+    public void setPortfolioList(List<Portfolio> portfolioList) {
+        this.portfolioList = portfolioList;
     }
 }
