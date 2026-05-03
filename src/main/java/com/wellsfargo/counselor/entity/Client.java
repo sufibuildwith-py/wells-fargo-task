@@ -1,19 +1,19 @@
 package com.wellsfargo.counselor.entity;
 
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
 @Entity
-public class Advisor {
-
+public class Client
+{
     @Id
     @GeneratedValue()
-    private long advisorId;
+    private long clientId;
+
+    @ManyToOne
+    @JoinColumn(name ="advisorId", nullable=false)
+    private Advisor advisor;
 
     @Column(nullable = false)
     private String firstName;
@@ -31,23 +31,27 @@ public class Advisor {
     private String email;
 
     @Column(nullable = false)
-    private LocalDate hireDate;
+    private LocalDate registrationDate;
 
-    protected Advisor() {
-
+    protected Client() {
     }
 
-    public Advisor(String firstName, String lastName, String address, String phone, String email, LocalDate hireDate ) {
+    public Client (String firstName, String lastName, String address, String phone, String email, LocalDate registrationDate)
+    {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.phone = phone;
         this.email = email;
-        this.hireDate = hireDate;
+        this.registrationDate = registrationDate;
     }
 
-    public Long getAdvisorId() {
-        return advisorId;
+    public long getClientId() {
+        return clientId;
+    }
+
+    public Advisor getAdvisor() {
+        return advisor;
     }
 
     public String getFirstName() {
@@ -90,11 +94,11 @@ public class Advisor {
         this.email = email;
     }
 
-    public LocalDate getHireDate() {
-        return hireDate;
+    public LocalDate getRegistrationDate() {
+        return registrationDate;
     }
 
-    public void setHireDate(LocalDate hireDate) {
-        this.hireDate = hireDate;
+    public void setRegistrationDate(LocalDate registrationDate) {
+        this.registrationDate = registrationDate;
     }
 }
