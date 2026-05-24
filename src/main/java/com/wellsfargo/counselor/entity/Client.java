@@ -28,7 +28,8 @@ public class Client{
     @Column(nullable = false)
     private String email;
 
-    protected Client{
+
+    protected Client(){
 
     }
 
